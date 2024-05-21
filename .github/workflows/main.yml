@@ -51,13 +51,15 @@ jobs:
       - name: Notify Telegram on Success
         if: success()
         run: |
-          curl -s -X POST " https://core.telegram.org/bots/api${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
-          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="Proses Build Berhasil --- RPL 2A"
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d '{"chat_id": "CI_CD_NotifierBot", "text": "Laravel CI build succeeded!"}' \
+            https://api.telegram.org/6943678766:AAHg5vNMQ8g9Vo5PuAFl04JmVU8Wre41Y_g/sendMessage
 
       - name: Notify Telegram on Failure
         if: failure()
         run: |
-          curl -s -X POST " https://core.telegram.org/bots/api${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
-          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="Proses Build Gagal --- RPL 2A
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d '{"chat_id": "CI_CD_NotifierBot", "text": "Laravel CI build failed!"}' \
+            https://api.telegram.org/6943678766:AAHg5vNMQ8g9Vo5PuAFl04JmVU8Wre41Y_g/sendMessage
